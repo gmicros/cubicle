@@ -1,0 +1,14 @@
+C:\Users\gcm\Desktop\cubicle\cubicle\cubicle\bin\Debug\cubicle.exe
+C:\Users\gcm\Desktop\cubicle\cubicle\cubicle\bin\Debug\cubicle.pdb
+C:\Users\gcm\Desktop\cubicle\cubicle\cubicle\obj\x86\Debug\MainWindow.baml
+C:\Users\gcm\Desktop\cubicle\cubicle\cubicle\obj\x86\Debug\MainWindow.g.cs
+C:\Users\gcm\Desktop\cubicle\cubicle\cubicle\obj\x86\Debug\App.g.cs
+C:\Users\gcm\Desktop\cubicle\cubicle\cubicle\obj\x86\Debug\cubicle_MarkupCompile.cache
+C:\Users\gcm\Desktop\cubicle\cubicle\cubicle\obj\x86\Debug\cubicle.g.resources
+C:\Users\gcm\Desktop\cubicle\cubicle\cubicle\obj\x86\Debug\cubicle.Properties.Resources.resources
+C:\Users\gcm\Desktop\cubicle\cubicle\cubicle\obj\x86\Debug\cubicle.csproj.GenerateResource.Cache
+C:\Users\gcm\Desktop\cubicle\cubicle\cubicle\obj\x86\Debug\cubicle.exe
+C:\Users\gcm\Desktop\cubicle\cubicle\cubicle\obj\x86\Debug\cubicle.pdb
+C:\Users\gcm\Desktop\cubicle\cubicle\cubicle\bin\Debug\Hardcodet.Wpf.TaskbarNotification.dll
+C:\Users\gcm\Desktop\cubicle\cubicle\cubicle\bin\Debug\Hardcodet.Wpf.TaskbarNotification.pdb
+C:\Users\gcm\Desktop\cubicle\cubicle\cubicle\bin\Debug\Hardcodet.Wpf.TaskbarNotification.xml
