@@ -23,6 +23,9 @@ namespace cubicle
     public partial class MainWindow : Window
     {
         public static TaskbarIcon tbi;
+        private List<Rect> grid = new List<Rect>();
+        private IntPtr hWndSelected = new IntPtr();
+        private InputData buffer;
 
         public MainWindow()
         {
@@ -44,64 +47,40 @@ namespace cubicle
                 var source = HwndSource.FromHwnd(hWnd);
                 source.AddHook(new HwndSourceHook(WndProc));
             }
+
+            grid.Add(new Rect(0, 0, 960, 540));
+            grid.Add(new Rect(0, 540, 960, 540));
+            grid.Add(new Rect(960, 0, 960, 1080));
         }
 
         #region rawInput
 
-        private InputData buffer;
-        private bool down = false;
-
-        private bool EnumWindow(IntPtr hWnd, IntPtr pntr)
-        {
-            POINT pt;
-                    GetCursorPos(out pt);
-
-            RECT rect;
-            GetWindowRect(hWnd,out rect);
-
-            if ((rect.Left < pt.X) && (rect.Right > pt.X) && (rect.Top < pt.Y) && (rect.Bottom > pt.Y))
-            {
-                SetWindowPos(hWnd, IntPtr.Zero, 0, 0, rect.Width, rect.Height, SetWindowPosFlags.FrameChanged | SetWindowPosFlags.AsynchronousWindowPosition); 
-            }         
-            return true;
-        } 
-
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wparam, IntPtr lparam, ref bool handled)
-        {
-            if (msg == 0x0207)
-            {
-                down = true;
-            }
-            POINT pt;
-            GetCursorPos(out pt);
-
-            
-            //if (msg == 0x0208)
-            //{
-            //    down = false;
-            //}
-            var size = 0;
-            //GetRawInputData(lparam, DataCommand.RID_INPUT, out buffer, ref size, Marshal.SizeOf(typeof(Rawinputheader)));
-            
+        {            
+            // get raw input data 
             buffer = new InputData();
             var rawInputSize = Marshal.SizeOf(buffer);
-
-            //RawInput temp = new RawInput();
             GetRawInputData(lparam, DataCommand.RID_INPUT, out buffer, ref rawInputSize, Marshal.SizeOf(typeof(Rawinputheader)));
-            
-            txtX.Content = pt.X;
-            txtY.Content = buffer.data.mouse.lLastY;
-            if (buffer.data.mouse.usButtonFlags == 0x0004)
-            {
-                down = false;
-                //var size = 0;
-                //GetRawInputData(lparam, DataCommand.RID_INPUT, out buffer, ref size, Marshal.SizeOf(typeof(Rawinputheader)));
 
-                if (buffer.header.dwType == 0)
-                {
-                    EnumWindows(EnumWindow, IntPtr.Zero);
-                }
+            // get cursur point
+            POINT pt;
+            GetCursorPos(out pt);
+            txtX.Content = pt.X.ToString();
+            txtY.Content = pt.Y.ToString();
+            
+            // middle mouse button down 
+            if (buffer.data.mouse.usButtonFlags == 0x0010)
+            {              
+                hWndSelected = WindowFromPoint(pt);
             }
+            // middle mouse button up
+            if (buffer.data.mouse.usButtonFlags == 0x0020)
+            {
+                var temp = grid.Find(x => x.Contains(pt.X, pt.Y));
+                SetWindowPos(hWndSelected, IntPtr.Zero, (int)temp.X, (int)temp.Y, (int)temp.Width, (int)temp.Height, SetWindowPosFlags.FrameChanged | SetWindowPosFlags.AsynchronousWindowPosition);
+                hWndSelected = IntPtr.Zero;
+            }
+
             return IntPtr.Zero;
         }
 
@@ -120,6 +99,21 @@ namespace cubicle
         #region win32
 
         private delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern bool SetProcessDPIAware();
+
+        [DllImport("user32.dll")]
+        static extern IntPtr WindowFromPoint(POINT Point);
+
+
+        [DllImport("user32.dll", ExactSpelling = true, CharSet = CharSet.Auto)]
+        public static extern IntPtr GetParent(IntPtr hWnd);
+
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool IsWindowVisible(IntPtr hWnd);
 
         [DllImport("user32.dll")]
         private static extern bool EnumWindows(EnumWindowsProc enumProc, IntPtr lParam);
@@ -826,7 +820,6 @@ namespace cubicle
         }
 
         #endregion
-
         #endregion
 
     }
