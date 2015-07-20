@@ -31,23 +31,31 @@ namespace cubicle
         {
             InitializeComponent();
             this.Loaded += new RoutedEventHandler(MainWindow_Loaded);
+            
+            var editor = new System.Windows.Controls.MenuItem();
+            editor.Header = "Editor";
+            editor.Click += new RoutedEventHandler(editor_Click);
 
+            var cont = new System.Windows.Controls.ContextMenu();
+            cont.Items.Add(editor);
+            
             tbi = new TaskbarIcon();
             //tbi.Icon = global::ControlSystemDialpadDisplayConfig.Properties.Resources.icon;
-            //tbi.ContextMenu = cm;
+            tbi.ContextMenu = cont;
             tbi.ToolTipText = "cubicle";
+
+                        
+        }
+
+        void editor_Click(object sender, RoutedEventArgs e)
+        {
+            //throw new NotImplementedException();
         }
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            var hWnd = new WindowInteropHelper(this).Handle;
-
-            if (registerMouse(hWnd))
-            {
-                var source = HwndSource.FromHwnd(hWnd);
-                source.AddHook(new HwndSourceHook(WndProc));
-            }
-
+           
+            
             grid.Add(new Rect(0, 0, 960, 540));
             grid.Add(new Rect(0, 540, 960, 540));
             grid.Add(new Rect(960, 0, 960, 1080));
