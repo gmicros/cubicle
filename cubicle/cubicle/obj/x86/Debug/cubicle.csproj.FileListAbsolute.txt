@@ -27,3 +27,4 @@ D:\Users\gcm\Desktop\cubicle\cubicle\cubicle\obj\x86\Debug\cubicle_MarkupCompile
 D:\Users\gcm\Desktop\cubicle\cubicle\cubicle\obj\x86\Debug\cubicle.g.resources
 D:\Users\gcm\Desktop\cubicle\cubicle\cubicle\obj\x86\Debug\cubicle.Properties.Resources.resources
 D:\Users\gcm\Desktop\cubicle\cubicle\cubicle\obj\x86\Debug\cubicle.csproj.GenerateResource.Cache
+C:\Users\gcm\Desktop\cubicle\cubicle\cubicle\obj\x86\Debug\cubicle.csprojResolveAssemblyReference.cache

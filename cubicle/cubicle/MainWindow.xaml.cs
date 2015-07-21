@@ -54,8 +54,15 @@ namespace cubicle
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-           
-            
+            var hWnd = new WindowInteropHelper(this).Handle;
+
+            if (registerMouse(hWnd))
+            {
+                var source = HwndSource.FromHwnd(hWnd);
+                source.AddHook(new HwndSourceHook(WndProc));
+            }
+            this.Visibility = System.Windows.Visibility.Hidden;
+
             grid.Add(new Rect(0, 0, 960, 540));
             grid.Add(new Rect(0, 540, 960, 540));
             grid.Add(new Rect(960, 0, 960, 1080));
